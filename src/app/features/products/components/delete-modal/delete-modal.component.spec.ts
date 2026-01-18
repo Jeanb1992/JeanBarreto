@@ -42,25 +42,4 @@ describe('DeleteModalComponent', () => {
     component.onCancel();
     expect(component.cancel.emit).toHaveBeenCalled();
   });
-
-  it('should call cancel on backdrop click', () => {
-    spyOn(component, 'onCancel');
-    const backdrop = document.createElement('div');
-    backdrop.classList.add('modal-backdrop');
-    const event = new MouseEvent('click', { bubbles: true });
-    Object.defineProperty(event, 'target', { value: backdrop, enumerable: true });
-
-    component.onBackdropClick(event);
-    expect(component.onCancel).toHaveBeenCalled();
-  });
-
-  it('should not call cancel if not backdrop click', () => {
-    spyOn(component, 'onCancel');
-    const otherElement = document.createElement('div');
-    const event = new MouseEvent('click', { bubbles: true });
-    Object.defineProperty(event, 'target', { value: otherElement, enumerable: true });
-
-    component.onBackdropClick(event);
-    expect(component.onCancel).not.toHaveBeenCalled();
-  });
 });

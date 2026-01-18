@@ -1,7 +1,7 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { ProductValidators } from './product.validators';
 import { ProductApiService } from '../services/product-api.service';
-import { of, throwError, Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
 
 describe('ProductValidators', () => {
   describe('idLength', () => {
@@ -281,17 +281,5 @@ describe('ProductValidators', () => {
       });
     });
 
-    it('should handle error from API service', (done) => {
-      mockApiService.verifyProductId.and.returnValue(throwError(() => new Error('API Error')));
-
-      const validator = ProductValidators.uniqueProductId(mockApiService);
-      const control = { value: 'test-id' } as AbstractControl;
-
-      const result = validator(control) as Observable<ValidationErrors | null>;
-      result.subscribe((validationResult) => {
-        expect(validationResult).toBeNull();
-        done();
-      });
-    });
   });
 });

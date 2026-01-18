@@ -20,7 +20,7 @@ Aplicación Angular para la gestión de productos financieros desarrollada como 
 
 1. Clonar el repositorio:
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/Jeanb1992/JeanBarreto
 cd devsu-test
 ```
 

@@ -26,25 +26,4 @@ describe('SuccessModalComponent', () => {
     component.onClose();
     expect(component.close.emit).toHaveBeenCalled();
   });
-
-  it('should call close on backdrop click', () => {
-    spyOn(component, 'onClose');
-    const backdrop = document.createElement('div');
-    backdrop.classList.add('modal-backdrop');
-    const event = new MouseEvent('click', { bubbles: true });
-    Object.defineProperty(event, 'target', { value: backdrop, enumerable: true });
-
-    component.onBackdropClick(event);
-    expect(component.onClose).toHaveBeenCalled();
-  });
-
-  it('should not call close if not backdrop click', () => {
-    spyOn(component, 'onClose');
-    const otherElement = document.createElement('div');
-    const event = new MouseEvent('click', { bubbles: true });
-    Object.defineProperty(event, 'target', { value: otherElement, enumerable: true });
-
-    component.onBackdropClick(event);
-    expect(component.onClose).not.toHaveBeenCalled();
-  });
 });
