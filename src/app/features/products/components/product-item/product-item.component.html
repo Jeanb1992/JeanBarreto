@@ -1,0 +1,38 @@
+<div class="product-item">
+  @if (product.logo && product.logo.trim()) {
+    <img 
+      [src]="getProductImage()" 
+      [alt]="product.name" 
+      class="product-logo"
+      (error)="onImageError($event)"
+    />
+  } @else {
+    <div class="product-logo-avatar">
+      {{ getInitials() }}
+    </div>
+  }
+  <span class="product-name">{{ product.name }}</span>
+  <span class="product-description">{{ product.description }}</span>
+  <span class="product-date">{{ product.date_release | date:'yyyy/MM/dd' }}</span>
+  <span class="product-date">{{ product.date_revision | date:'yyyy/MM/dd' }}</span>
+  <div class="product-actions">
+    <button
+      type="button"
+      (click)="toggleMenu()"
+      class="menu-button"
+      aria-label="Menú de opciones"
+    >
+      ⋮
+    </button>
+    @if (showMenu) {
+      <div class="dropdown-menu">
+        <button type="button" (click)="onEdit()" class="menu-item">
+          Editar
+        </button>
+        <button type="button" (click)="onDelete()" class="menu-item">
+          Eliminar
+        </button>
+      </div>
+    }
+  </div>
+</div>

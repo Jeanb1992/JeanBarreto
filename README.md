@@ -1,59 +1,120 @@
-# DevsuTest
+# Devsu Test - Gestión de Productos Financieros
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.10.
+Aplicación Angular para la gestión de productos financieros desarrollada como prueba técnica.
 
-## Development server
+## Tecnologías
 
-To start a local development server, run:
+- Angular 20.3.0
+- TypeScript 5.9.2
+- RxJS 7.8.0
+- Angular Reactive Forms
+- Angular Signals (para estado reactivo)
 
+## Requisitos Previos
+
+- Node.js 18 o superior
+- npm 9 o superior
+- Backend API corriendo en `http://localhost:3002`
+
+## Instalación
+
+1. Clonar el repositorio:
 ```bash
-ng serve
+git clone <url-del-repositorio>
+cd devsu-test
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+2. Instalar dependencias:
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+3. Asegurarse de que el backend esté corriendo en `http://localhost:3002`
+
+**Nota sobre CORS:** El proyecto está configurado con un proxy para desarrollo que evita problemas de CORS. Las peticiones a `/bp/*` se redirigen automáticamente a `http://localhost:3002/bp/*` mediante el archivo `proxy.conf.json`.
+
+## Ejecución
+
+### Servidor de desarrollo
 
 ```bash
-ng generate --help
+npm start
 ```
 
-## Building
+La aplicación estará disponible en `http://localhost:4200`
 
-To build the project run:
+### Build para producción
 
 ```bash
-ng build
+npm run build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Los archivos compilados estarán en la carpeta `dist/devsu-test`
 
-## Running unit tests
+## Pruebas Unitarias
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Ejecutar pruebas
 
 ```bash
-ng test
+npm test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+### Ejecutar pruebas con cobertura
 
 ```bash
-ng e2e
+npm test -- --code-coverage
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+El reporte de cobertura se generará en `coverage/` y mostrará el porcentaje de cobertura del código.
 
-## Additional Resources
+### Cobertura mínima
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+El proyecto está configurado para mantener un mínimo del 70% de cobertura de código.
+
+## Estructura del Proyecto
+
+```
+src/
+├── app/
+│   ├── core/
+│   │   ├── constants/        # Constantes de la aplicación
+│   │   ├── interceptors/     # Interceptores HTTP
+│   │   ├── models/           # Modelos e interfaces
+│   │   ├── services/         # Servicios (API, lógica de negocio)
+│   │   └── validators/       # Validadores personalizados
+│   ├── features/
+│   │   └── products/
+│   │       └── components/
+│   │           ├── product-list/      # Listado de productos
+│   │           ├── product-item/     # Item individual de producto
+│   │           ├── product-form/      # Formulario agregar/editar
+│   │           └── delete-modal/      # Modal de confirmación
+│   ├── app.config.ts         # Configuración de la aplicación
+│   └── app.routes.ts          # Rutas de la aplicación
+```
+
+## Validaciones del Formulario
+
+- **ID**: Requerido, 3-10 caracteres, único (validación asíncrona)
+- **Nombre**: Requerido, 5-100 caracteres
+- **Descripción**: Requerido, 10-200 caracteres
+- **Logo**: Requerido (URL)
+- **Fecha de Liberación**: Requerido, >= fecha actual
+- **Fecha de Revisión**: Requerido, exactamente 1 año después de la fecha de liberación
+
+## API Endpoints
+
+La aplicación consume los siguientes endpoints:
+
+- `GET /bp/products` - Obtener todos los productos
+- `POST /bp/products` - Crear producto
+- `PUT /bp/products/:id` - Actualizar producto
+- `DELETE /bp/products/:id` - Eliminar producto
+- `GET /bp/products/verification/:id` - Verificar existencia de ID
+
+## Scripts Disponibles
+
+- `npm start` - Inicia el servidor de desarrollo
+- `npm run build` - Compila la aplicación para producción
+- `npm test` - Ejecuta las pruebas unitarias
+- `npm run watch` - Compila en modo watch

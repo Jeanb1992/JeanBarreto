@@ -1,0 +1,109 @@
+/* Estilos básicos - El usuario implementará el diseño completo */
+.product-item {
+  display: grid;
+  grid-template-columns: 100px 2.0fr 2.0fr 2.0fr 2.0fr 2.0fr; /* Debe coincidir con .products-table-header */
+  gap: 1rem; /* Mismo gap que el header */
+  align-items: center;
+  padding: 1rem; /* Mismo padding que el header */
+  border: none;
+  border-bottom: 1px solid #e0e0e0; /* Línea separadora */
+  background-color: #fff;
+  min-width: fit-content;
+  transition: background-color 0.2s;
+}
+
+.product-item:hover {
+  background-color: #fafafa;
+}
+
+.product-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  justify-self: center; /* Alinea el logo al centro */
+  background-color: #f5f5f5;
+}
+
+.product-logo-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #666;
+  justify-self: center;
+}
+
+.product-name {
+  font-weight: 400;
+  font-size: 0.875rem;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #333;
+  justify-self: left;
+}
+
+.product-description {
+  color: #666;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  justify-self: left;
+}
+
+.product-date {
+  font-size: 0.875rem;
+  color: #666;
+  text-align: left;
+  justify-self: left;
+}
+
+.product-actions {
+  position: relative;
+  display: flex;
+  justify-content: flex-end; /* Alinea el botón de menú a la derecha */
+  justify-self: right; /* Alinea el contenedor de acciones a la derecha */
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  min-width: 120px;
+}
+
+.menu-item {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: #f5f5f5;
+}

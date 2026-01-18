@@ -1,0 +1,17 @@
+@if (visible) {
+  <div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>¿Estás seguro de eliminar el producto "<strong>{{ product.name }}</strong>"?</h3>
+      <p class="warning">Esta acción no se puede deshacer.</p>
+      
+      <div class="modal-actions">
+        <button type="button" (click)="onCancel()" class="btn-cancel">
+          Cancelar
+        </button>
+        <button type="button" (click)="onConfirm()" class="btn-delete">
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+}

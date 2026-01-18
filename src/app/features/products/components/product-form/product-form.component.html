@@ -1,0 +1,116 @@
+<div class="product-form-container">
+  <h2>Formulario de Registro</h2>
+
+  @if (error()) {
+    <div class="error-message">
+      {{ error() }}
+    </div>
+  }
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <!-- Fila 1: ID y Nombre -->
+    <div class="form-row-pair">
+      <div class="form-group">
+        <label for="id">ID</label>
+        <input
+          id="id"
+          type="text"
+          formControlName="id"
+          [class.invalid]="isFieldInvalid('id')"
+        />
+        @if (isFieldInvalid('id')) {
+          <span class="error-text">{{ getFieldError('id') }}</span>
+        }
+      </div>
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          [class.invalid]="isFieldInvalid('name')"
+        />
+        @if (isFieldInvalid('name')) {
+          <span class="error-text">{{ getFieldError('name') }}</span>
+        }
+      </div>
+    </div>
+
+    <!-- Fila 2: Descripción y Logo -->
+    <div class="form-row-pair">
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="4"
+          [class.invalid]="isFieldInvalid('description')"
+        ></textarea>
+        @if (isFieldInvalid('description')) {
+          <span class="error-text">{{ getFieldError('description') }}</span>
+        }
+      </div>
+      <div class="form-group">
+        <label for="logo">Logo</label>
+        <input
+          id="logo"
+          type="url"
+          formControlName="logo"
+          [class.invalid]="isFieldInvalid('logo')"
+        />
+        @if (isFieldInvalid('logo')) {
+          <span class="error-text">{{ getFieldError('logo') }}</span>
+        }
+      </div>
+    </div>
+
+    <!-- Fila 3: Fecha Liberación y Fecha Revisión -->
+    <div class="form-row-pair">
+      <div class="form-group">
+        <label for="date_release">Fecha Liberación</label>
+        <input
+          id="date_release"
+          type="date"
+          formControlName="date_release"
+          [class.invalid]="isFieldInvalid('date_release')"
+        />
+        @if (isFieldInvalid('date_release')) {
+          <span class="error-text">{{ getFieldError('date_release') }}</span>
+        }
+      </div>
+      <div class="form-group">
+        <label for="date_revision">Fecha Revisión</label>
+        <input
+          id="date_revision"
+          type="date"
+          formControlName="date_revision"
+          [class.invalid]="isFieldInvalid('date_revision')"
+        />
+        @if (isFieldInvalid('date_revision')) {
+          <span class="error-text">{{ getFieldError('date_revision') }}</span>
+        }
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="form-actions">
+      <button type="button" (click)="onReset()" class="btn-reset">
+        Reiniciar
+      </button>
+      <button
+        type="submit"
+        [disabled]="productForm.invalid || loading()"
+        class="btn-submit"
+      >
+        Enviar
+      </button>
+    </div>
+  </form>
+
+  <!-- Modal de éxito -->
+  <app-success-modal
+    [message]="successMessage()"
+    [visible]="showSuccessModal()"
+    (close)="closeSuccessModal()"
+  />
+</div>

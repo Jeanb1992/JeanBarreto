@@ -1,0 +1,14 @@
+@if (visible) {
+  <div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="success-icon">✓</div>
+      <h3>{{ message }}</h3>
+      
+      <div class="modal-actions">
+        <button type="button" (click)="onClose()" class="btn-close">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+}

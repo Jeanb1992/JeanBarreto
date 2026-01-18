@@ -1,0 +1,142 @@
+<div class="product-list-wrapper">
+  <!-- Header con búsqueda y botón agregar - FUERA del contenedor blanco -->
+  <div class="product-list-header">
+    <input
+      type="text"
+      [value]="searchTerm()"
+      (input)="onSearchChange($any($event.target).value)"
+      placeholder="Search..."
+      class="search-input"
+    />
+    <button type="button" (click)="goToAddProduct()" class="btn-add">
+      Agregar
+    </button>
+  </div>
+  
+  <!-- Contenedor blanco con la tabla de productos -->
+  <div class="product-list-container">
+    <!-- Mensaje de error -->
+  @if (error()) {
+    <div class="error-message">
+      <strong>Error al cargar productos:</strong>
+      <p>{{ error() }}</p>
+      <p style="font-size: 0.875rem; margin-top: 0.5rem;">
+        <strong>Instrucciones:</strong><br>
+        1. Asegúrate de que el backend esté corriendo en http://localhost:3002<br>
+        2. En el proyecto backend, ejecuta: <code>npm run start:dev</code><br>
+        3. Verifica que el puerto 3002 esté disponible
+      </p>
+    </div>
+  }
+
+  <!-- Loading state -->
+  @if (loading()) {
+    <div class="loading-message">
+      <p>Cargando productos...</p>
+      <p style="font-size: 0.875rem; color: #666;">
+        Por favor, asegúrate de que el backend esté corriendo en http://localhost:3002
+      </p>
+    </div>
+  }
+
+  <!-- Lista de productos -->
+  @if (!loading() && paginatedProducts().length > 0) {
+    <div class="products-table-wrapper">
+      <div class="products-table-header">
+        <span>Logo</span>
+        <span>Nombre del producto</span>
+        <span>
+          Descripción
+          <mat-icon class="info-icon">info</mat-icon>
+        </span>
+        <span>
+          Fecha de liberación
+          <mat-icon class="info-icon">info</mat-icon>
+        </span>
+        <span>
+          Fecha de reestructuración
+          <mat-icon class="info-icon">info</mat-icon>
+        </span>
+        <span></span>
+      </div>
+      <div class="products-grid">
+        @for (product of paginatedProducts(); track product.id) {
+          <app-product-item
+            [product]="product"
+            (edit)="goToEditProduct($event)"
+            (delete)="onDeleteProduct($event)"
+          />
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Mensaje cuando no hay resultados -->
+  @if (!loading() && !error() && paginatedProducts().length === 0 && products().length === 0) {
+    <div class="no-results">
+      @if (searchTerm()) {
+        <p>No se encontraron productos que coincidan con "{{ searchTerm() }}"</p>
+      } @else {
+        <p>No hay productos disponibles</p>
+        <p style="font-size: 0.875rem; color: #666; margin-top: 0.5rem;">
+          Verifica que el backend esté corriendo y que el endpoint /bp/products esté disponible.
+        </p>
+      }
+    </div>
+  }
+
+  <!-- Mensaje cuando hay búsqueda pero no resultados -->
+  @if (!loading() && !error() && searchTerm() && paginatedProducts().length === 0 && products().length > 0) {
+    <div class="no-results">
+      <p>No se encontraron productos que coincidan con "{{ searchTerm() }}"</p>
+    </div>
+  }
+    <!-- Información de resultados y paginación -->
+    <div class="product-list-info">
+      <span class="results-count">
+        {{ totalProducts() }} Resultados
+      </span>
+      <select
+        [value]="pageSize()"
+        (change)="onPageSizeChange(+$any($event.target).value)"
+        class="page-size-select"
+      >
+        @for (option of paginationOptions; track option) {
+          <option [value]="option">{{ option }}</option>
+        }
+      </select>
+    </div>
+    <!-- Paginación -->
+    @if (totalPages() > 1) {
+      <div class="pagination">
+        @for (pageNum of pageNumbers(); track pageNum) {
+          <button
+            type="button"
+            (click)="goToPage(pageNum)"
+            [class.active]="currentPage() === pageNum"
+            class="pagination-number"
+          >
+            {{ pageNum }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Modal de eliminación -->
+  @if (productToDelete()) {
+    <app-delete-modal
+      [product]="productToDelete()!"
+      [visible]="showDeleteModal()"
+      (confirm)="confirmDelete()"
+      (cancel)="cancelDelete()"
+    />
+  }
+
+  <!-- Modal de éxito -->
+  <app-success-modal
+    [message]="successMessage()"
+    [visible]="showSuccessModal()"
+    (close)="closeSuccessModal()"
+  />
+</div>
